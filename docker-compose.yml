@@ -1,0 +1,4 @@
+services:
+  db: { image: "postgres:16", environment: { POSTGRES_PASSWORD: dev, POSTGRES_DB: internflow }, volumes: ["pg:/var/lib/postgresql/data"] }
+  backend: { build: ./backend, environment: { DATABASE_URL: "postgresql+psycopg://postgres:dev@db/internflow", JWT_SECRET: "${JWT_SECRET:-change-me}", INTEGRATIONS_LIVE: "false" }, ports: ["8000:8000"], depends_on: [db] }
+volumes: { pg: {} }
